@@ -12,12 +12,11 @@ var paths = {
 };
 
 paths.ts = paths.webroot + "ts/**/*.js";
-paths.js = paths.webroot + "js/**/*.js";
-paths.minJs = paths.webroot + "js/**/*.min.js";
+paths.minJs = paths.webroot + "ts/**/*.min.js";
 paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "js/site.min.js";
-paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.concatJsDest = paths.webroot + "dist/site.min.js";
+paths.concatCssDest = paths.webroot + "dist/site.min.css";
 
 
 
@@ -32,7 +31,7 @@ gulp.task("clean:css", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("min:js", function () {
-    return gulp.src([paths.js, paths.ts, "!" + paths.minJs], { base: "." })
+    return gulp.src([paths.ts, "!" + paths.minJs], { base: "." })
         .pipe(concat(paths.concatJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
