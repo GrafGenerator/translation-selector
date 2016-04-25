@@ -1,22 +1,23 @@
-﻿/// <binding Clean='clean' />
+﻿/// <binding AfterBuild='min' Clean='clean' />
 "use strict";
 
 var gulp = require("gulp"),
+    ts = require('gulp-typescript'),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify");
 
 var paths = {
-    webroot: "./wwwroot/"
+    webroot: "./wwwroot/",
+    src: "./app/"
 };
 
-paths.js = paths.webroot + "js/**/*.js";
-paths.minJs = paths.webroot + "js/**/*.min.js";
-paths.css = paths.webroot + "css/**/*.css";
-paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "js/site.min.js";
-paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.ts = [paths.src + "components/**/*.ts", paths.src + "index.ts"];
+paths.js = paths.src + "js/**/*.js";
+paths.css = paths.src + "css/**/*.css";
+paths.concatJsDest = paths.webroot + "js/app.js";
+paths.concatCssDest = paths.webroot + "css/app.css";
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
@@ -27,6 +28,28 @@ gulp.task("clean:css", function (cb) {
 });
 
 gulp.task("clean", ["clean:js", "clean:css"]);
+
+var tsCompilerConfig = ts.createProject({
+    declarationFiles: true,
+    noExternalResolve: false,
+    module: 'AMD',
+    removeComments: true
+});
+
+gulp.task('ts-compile', function () {
+    var tsResult = gulp.src(paths.ts)
+        .pipe(ts(tsCompilerConfig));
+
+    return tsResult
+        .pipe(concat(paths.concatJsDest))
+        .pipe(uglify())
+        .pipe(gulp.dest("."));
+
+    //return merge([
+    //    tsResult.dts.pipe(gulp.dest(paths.tsDef)),
+    //    tsResult.js.pipe(gulp.dest(paths.tsOutput))
+    //]);
+});
 
 gulp.task("min:js", function () {
     return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
@@ -42,4 +65,4 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:css"]);
+gulp.task("min", ["ts-compile"]);
