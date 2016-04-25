@@ -6,14 +6,18 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>ea10d61d-237a-49ff-85a0-622b9d4dff56</ProjectGuid>
-    <RootNamespace>Translation.UI</RootNamespace>
+    <ProjectGuid>86441209-b136-4ced-98cc-9752b465c561</ProjectGuid>
+    <RootNamespace>GrafGenerator.TranslationSelector.UI</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <DevelopmentServerPort>49478</DevelopmentServerPort>
   </PropertyGroup>
+  <ItemGroup>
+    <DnxInvisibleContent Include="bower.json" />
+    <DnxInvisibleContent Include=".bowerrc" />
+    <DnxInvisibleContent Include="package.json" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
