@@ -237,4 +237,6 @@ _Pvt_Extensions
 
 
 # dist folder
-src/Translation.UI/wwwroot/dist
+src/GrafGenerator.TranslationSelector.UI/wwwroot/js/
+src/GrafGenerator.TranslationSelector.UI/wwwroot/css/
+src/GrafGenerator.TranslationSelector.UI/app/lib/
