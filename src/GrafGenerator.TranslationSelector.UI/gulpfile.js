@@ -3,6 +3,7 @@
 
 var gulp = require("gulp"),
     ts = require('gulp-typescript'),
+    sourcemaps = require('gulp-sourcemaps'),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
@@ -45,12 +46,12 @@ var tsCompilerConfig = ts.createProject({
 });
 
 gulp.task('ts-compile', function () {
-    var tsResult = gulp.src(paths.ts)
-        .pipe(ts(tsCompilerConfig));
-
-    return tsResult
-        .pipe(concat(paths.concatJsDest))
-        .pipe(uglify())
+    return gulp.src(paths.ts)
+        .pipe(ts(tsCompilerConfig))
+        .pipe(sourcemaps.init())
+            .pipe(concat(paths.concatJsDest))
+            //.pipe(uglify())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest("."));
 
     //return merge([
