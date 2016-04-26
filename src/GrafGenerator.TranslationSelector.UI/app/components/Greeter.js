@@ -4,5 +4,5 @@ var Greeter = (function () {
         this.name = name;
     }
     return Greeter;
-})();
+}());
 exports.Greeter = Greeter;

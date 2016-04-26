@@ -7,3 +7,5 @@
 /// <reference path="../app/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
 /// <reference path="../gulpfile.js" />
 /// <reference path="js/app.js" />
+/// <reference path="js/lib.js" />
+/// <reference path="js/require.js" />

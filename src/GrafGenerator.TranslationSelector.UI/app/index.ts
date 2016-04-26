@@ -1,5 +1,7 @@
 ﻿import { Greeter } from './components/Greeter';
 
-var greeter = new Greeter("Nikita");
-
-document.body.innerHTML = greeter.name;
+window.onload = () => {
+    var greeter = new Greeter("Nikita");
+    document.body.innerHTML = greeter.name;
+    alert(greeter.name);
+};

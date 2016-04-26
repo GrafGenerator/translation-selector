@@ -240,3 +240,4 @@ _Pvt_Extensions
 src/GrafGenerator.TranslationSelector.UI/wwwroot/js/
 src/GrafGenerator.TranslationSelector.UI/wwwroot/css/
 src/GrafGenerator.TranslationSelector.UI/app/lib/
+src/GrafGenerator.TranslationSelector.UI/app/*.js
