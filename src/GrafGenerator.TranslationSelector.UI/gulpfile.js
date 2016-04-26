@@ -41,7 +41,7 @@ gulp.task("clean", ["clean:js", "clean:lib", "clean:css"]);
 var tsCompilerConfig = ts.createProject({
     declarationFiles: true,
     noExternalResolve: false,
-    module: 'AMD',
+    //module: 'AMD',
     removeComments: true
 });
 
