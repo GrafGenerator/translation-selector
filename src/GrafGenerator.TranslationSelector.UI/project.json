@@ -5,6 +5,8 @@
     "emitEntryPoint": true
   },
 
+  "webroot":  "wwwroot",
+
   "dependencies": {
     "EntityFramework.Commands": "7.0.0-rc1-final",
     "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.StaticFiles;
+using Microsoft.AspNet.FileProviders;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
@@ -52,7 +54,7 @@ namespace GrafGenerator.TranslationSelector.UI
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            //services.AddMvc();
 
             // Add application services.
             //services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -94,18 +96,19 @@ namespace GrafGenerator.TranslationSelector.UI
 
             app.UseApplicationInsightsExceptionTelemetry();
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             //app.UseIdentity();
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
         }
 
         // Entry point for the application.
