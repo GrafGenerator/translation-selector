@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild="build" Clean="clean" />
+﻿/// <binding BeforeBuild='clean' AfterBuild='build' />
 "use strict";
 
 var gulp = require("gulp");
@@ -18,6 +18,7 @@ var tsify = require("tsify");
 var uglifyJs = require("gulp-uglify");
 var uglifyCss = require("gulp-minify-css");
 
+var rimraf = require("rimraf");
 
 var config = {
 	dir: {
@@ -27,9 +28,15 @@ var config = {
 		public: __dirname + "/wwwroot"
 	},
 
+	entry: {
+		js: "index.ts",
+		css: "index.less"
+	},
+
 	bundle: {
 		js: "app.js",
 		jsMin: "app.min.js",
+		jsMap: "app.js.map",
 		css: "app.css",
 		cssMin: "app.min.css"
 	}
@@ -40,15 +47,22 @@ var config = {
 
 gulp.task("clean-js", function (cb) {
 	rimraf(config.dir.app + '/' + config.bundle.js, cb);
+});
+
+gulp.task("clean-js-min", function (cb) {
 	rimraf(config.dir.app + '/' + config.bundle.jsMin, cb);
 });
 
 gulp.task("clean-css", function (cb) {
 	rimraf(config.dir.app + '/' + config.bundle.css, cb);
-	rimraf(config.dir.app + '/' + config.bundle.cssMin, cb);
 });
 
-gulp.task("clean", ["clean-js", "clean-css"]);
+gulp.task("clean-css-min", function (cb) {
+	rimraf(config.dir.app + '/' + config.bundle.cssMin, cb);
+
+});
+
+gulp.task("clean", ["clean-js", "clean-js-min", "clean-css", "clean-css-min"]);
 
 
 
@@ -62,17 +76,17 @@ gulp.task("clean", ["clean-js", "clean-css"]);
 gulp.task("compile-js", function () {
 	var bundler =
 		browserify({
-			basedir: config.applicationDir,
+			basedir: config.dir.app,
 			debug: true
 		})
-		.add(config.applicationDir + "/index.ts")
+		.add(config.dir.app + "/" + config.entry.js)
 		.plugin(tsify)
 		.transform(debowerify);
 
 	return bundler.bundle()
-		.pipe(exorcist(config.publicDir + "/app.js.map"))
-		.pipe(source("app.js"))
-		.pipe(gulp.dest(config.publicDir));
+		.pipe(exorcist(config.dir.public + "/" + config.bundle.jsMap))
+		.pipe(source(config.bundle.js))
+		.pipe(gulp.dest(config.dir.public));
 });
 
 
@@ -80,10 +94,10 @@ gulp.task("compile-js", function () {
  * Minify result js file
  */
 gulp.task("uglify-js", ["compile-js"], function () {
-	return gulp.src(config.publicDir + "/app.js")
+	return gulp.src(config.publicDir + "/" + config.bundle.js)
 		.pipe(uglifyJs())
-		.pipe(rename("app.min.js"))
-		.pipe(gulp.dest(config.publicDir));
+		.pipe(rename(config.bundle.jsMin))
+		.pipe(gulp.dest(config.dir.public));
 });
 
 
@@ -96,13 +110,13 @@ gulp.task("build-js", ["compile-js", "uglify-js"]);
  * Compile less styles to css and save result to public directory
  */
 gulp.task("compile-css", function () {
-	return gulp.src(config.stylesDir + "/index.less")
+	return gulp.src(config.stylesDir + "/" + config.entry.css)
 		.pipe(sourceMaps.init())
-		.pipe(less({ paths: [config.stylesDir] }))
+		.pipe(less({ paths: [config.dir.styles] }))
 		.pipe(replace("../fonts/glyphicons", "./fonts/bootstrap/glyphicons"))       // set right paths to bootstrap fonts
-		.pipe(rename("app.css"))                                                  // rename must be before source maps call
+		.pipe(rename(config.bundle.css))                                                  // rename must be before source maps call
 		.pipe(sourceMaps.write("."))                                                // must be relative to public directory
-		.pipe(gulp.dest(config.publicDir));
+		.pipe(gulp.dest(config.dir.public));
 });
 
 
@@ -110,12 +124,12 @@ gulp.task("compile-css", function () {
  * Minify result css file
  */
 gulp.task("uglify-css", ["compile-css"], function () {
-	return gulp.src(config.publicDir + "/app.css")
+	return gulp.src(config.dir.public + "/" + config.bundle.css)
 		.pipe(uglifyCss({
 			keepSpecialComments: 0
 		}))
-		.pipe(rename("app.min.css"))
-		.pipe(gulp.dest(config.publicDir));
+		.pipe(rename(config.bundle.cssMin))
+		.pipe(gulp.dest(config.dir.public));
 });
 
 
@@ -129,8 +143,8 @@ gulp.task("build-css", ["compile-css", "uglify-css"]);
  * Copy bootstrap fonts to public directory
  */
 gulp.task("fonts-bootstrap", function () {
-	return gulp.src(config.bowerDir + "/bootstrap/fonts/*")
-		.pipe(gulp.dest(config.publicDir + "/fonts/bootstrap"));
+	return gulp.src(config.dir.bower + "/bootstrap/fonts/*")
+		.pipe(gulp.dest(config.dir.public + "/fonts/bootstrap"));
 });
 
 
