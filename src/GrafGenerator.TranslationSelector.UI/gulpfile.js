@@ -46,19 +46,19 @@ var config = {
 // ====== CLEANUP
 
 gulp.task("clean-js", function (cb) {
-	rimraf(config.dir.app + '/' + config.bundle.js, cb);
+	rimraf(config.dir.public + '/' + config.bundle.js, cb);
 });
 
 gulp.task("clean-js-min", function (cb) {
-	rimraf(config.dir.app + '/' + config.bundle.jsMin, cb);
+	rimraf(config.dir.public + '/' + config.bundle.jsMin, cb);
 });
 
 gulp.task("clean-css", function (cb) {
-	rimraf(config.dir.app + '/' + config.bundle.css, cb);
+	rimraf(config.dir.public + '/' + config.bundle.css, cb);
 });
 
 gulp.task("clean-css-min", function (cb) {
-	rimraf(config.dir.app + '/' + config.bundle.cssMin, cb);
+	rimraf(config.dir.public + '/' + config.bundle.cssMin, cb);
 
 });
 
