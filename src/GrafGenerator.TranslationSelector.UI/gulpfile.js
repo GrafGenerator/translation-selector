@@ -25,7 +25,7 @@ var config = {
 		bower: __dirname + "/bower_components",
 		app: __dirname + "/app",
 		styles: __dirname + "/styles",
-		public: __dirname + "/wwwroot"
+		wwwroot: __dirname + "/wwwroot"
 	},
 
 	entry: {
@@ -84,9 +84,9 @@ gulp.task("compile-js", function () {
 		.transform(debowerify);
 
 	return bundler.bundle()
-		.pipe(exorcist(config.dir.public + "/" + config.bundle.jsMap))
+		.pipe(exorcist(config.dir.wwwroot + "/" + config.bundle.jsMap))
 		.pipe(source(config.bundle.js))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.wwwroot));
 });
 
 
@@ -94,10 +94,10 @@ gulp.task("compile-js", function () {
  * Minify result js file
  */
 gulp.task("uglify-js", ["compile-js"], function () {
-	return gulp.src(config.publicDir + "/" + config.bundle.js)
+	return gulp.src(config.dir.public + "/" + config.bundle.js)
 		.pipe(uglifyJs())
 		.pipe(rename(config.bundle.jsMin))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.wwwroot));
 });
 
 
@@ -110,13 +110,13 @@ gulp.task("build-js", ["compile-js", "uglify-js"]);
  * Compile less styles to css and save result to public directory
  */
 gulp.task("compile-css", function () {
-	return gulp.src(config.stylesDir + "/" + config.entry.css)
+	return gulp.src(config.dir.styles + "/" + config.entry.css)
 		.pipe(sourceMaps.init())
 		.pipe(less({ paths: [config.dir.styles] }))
 		.pipe(replace("../fonts/glyphicons", "./fonts/bootstrap/glyphicons"))       // set right paths to bootstrap fonts
-		.pipe(rename(config.bundle.css))                                                  // rename must be before source maps call
+		.pipe(rename(config.bundle.css))                                            // rename must be before source maps call
 		.pipe(sourceMaps.write("."))                                                // must be relative to public directory
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.wwwroot));
 });
 
 
@@ -124,12 +124,12 @@ gulp.task("compile-css", function () {
  * Minify result css file
  */
 gulp.task("uglify-css", ["compile-css"], function () {
-	return gulp.src(config.dir.public + "/" + config.bundle.css)
+	return gulp.src(config.dir.wwwroot + "/" + config.bundle.css)
 		.pipe(uglifyCss({
 			keepSpecialComments: 0
 		}))
 		.pipe(rename(config.bundle.cssMin))
-		.pipe(gulp.dest(config.dir.public));
+		.pipe(gulp.dest(config.dir.wwwroot));
 });
 
 
@@ -144,7 +144,7 @@ gulp.task("build-css", ["compile-css", "uglify-css"]);
  */
 gulp.task("fonts-bootstrap", function () {
 	return gulp.src(config.dir.bower + "/bootstrap/fonts/*")
-		.pipe(gulp.dest(config.dir.public + "/fonts/bootstrap"));
+		.pipe(gulp.dest(config.dir.wwwroot + "/fonts/bootstrap"));
 });
 
 

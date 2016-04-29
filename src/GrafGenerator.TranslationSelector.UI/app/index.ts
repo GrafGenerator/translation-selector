@@ -1,11 +1,12 @@
-﻿import { Greeter } from './components/Greeter';
+﻿/// <reference path="typings/main/definitions/bootstrap/index.d.ts" />
+/// <reference path="typings/main/definitions/jquery/index.d.ts" />
 
-export function run() {
-    alert('erwfg');
+import jQuery = require("jquery");
+window["jQuery"] = window["$"] = jQuery;
 
-    window.onload = () => {
-        var greeter = new Greeter("Nikita");
-        document.body.innerHTML = greeter.name;
-        alert(greeter.name);
-    };
-};
+import Bootstrap = require("bootstrap");
+[Bootstrap];
+
+
+import app = require("./app");
+app.run();

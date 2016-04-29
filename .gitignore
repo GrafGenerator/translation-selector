@@ -237,10 +237,17 @@ _Pvt_Extensions
 
 
 # dist folder
-src/GrafGenerator.TranslationSelector.UI/wwwroot/js/
-src/GrafGenerator.TranslationSelector.UI/wwwroot/css/
-src/GrafGenerator.TranslationSelector.UI/app/lib/
-src/GrafGenerator.TranslationSelector.UI/app/*.js
+src/GrafGenerator.TranslationSelector.UI/wwwroot/js/*
+src/GrafGenerator.TranslationSelector.UI/wwwroot/css/*
+src/GrafGenerator.TranslationSelector.UI/wwwroot/fonts/*
+src/GrafGenerator.TranslationSelector.UI/wwwroot/*.js
+src/GrafGenerator.TranslationSelector.UI/wwwroot/*.css
+src/GrafGenerator.TranslationSelector.UI/wwwroot/*.js.map
+src/GrafGenerator.TranslationSelector.UI/wwwroot/*.css.map
+
+# app folder
+src/GrafGenerator.TranslationSelector.UI/app/lib/*
+src/GrafGenerator.TranslationSelector.UI/app/typings/*
 
 # bower
 src/GrafGenerator.TranslationSelector.UI/bower_components/
