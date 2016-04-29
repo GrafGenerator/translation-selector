@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "newLine": "CRLF"
+    },
+    "files": [
+        "src/app/index.ts",
+        "src/app/typings/main.d.ts",
+        "src/app/custom_typings/main.d.ts"
+    ],
+
+    "exclude": [
+        "node_modules",
+        "wwwroot"
+    ]
+}

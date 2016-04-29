@@ -1,8 +1,8 @@
-﻿/// <reference path="typings/main/definitions/bootstrap/index.d.ts" />
-/// <reference path="typings/main/definitions/jquery/index.d.ts" />
+﻿/// <reference path="typings/main.d.ts" />
+/// <reference path="custom_typings/main.d.ts" />
 
-import jQuery = require("jquery");
-window["jQuery"] = window["$"] = jQuery;
+import * as jQuery from "jquery";
+//window["jQuery"] = window["$"] = jQuery;
 
 import Bootstrap = require("bootstrap");
 [Bootstrap];
